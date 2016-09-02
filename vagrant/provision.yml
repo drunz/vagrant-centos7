@@ -1,0 +1,53 @@
+---
+
+- name: Provision Vagrant
+  hosts: all
+  become: yes
+  become_user: root
+  become_method: sudo
+  tasks:
+
+    - name: Upgrade all packages
+      yum: name=* state=latest
+
+    - name: Install 'Development tools' package group
+      yum: name="@Development tools" state=present
+
+    - name: Install base packages
+      yum: name={{ item }} state=latest
+      with_items:
+        - epel-release
+        - vim
+        - htop
+        - ntp
+        - ntpdate
+        - net-snmp-utils
+        - net-tools
+        - python-pip
+        - wget
+        - siege
+
+    - name: Acquire permissions to /var/log
+      file:
+        path: /var/log
+        state: directory
+        recurse: yes
+        mode: 0777
+
+    - include: tasks/docker.yml
+    - include: tasks/postgresql.yml
+    - include: tasks/python.yml
+
+    - name: Install uWSGI and plugins
+      yum: name={{ item }} state=latest
+      with_items:
+        - uwsgi
+        - uwsgi-plugin-common
+        - uwsgi-plugin-python3
+        - uwsgi-router-http
+
+    - name: Install pip tools
+      pip: name={{ item }} state=latest
+      with_items:
+        - virtualenv
+        - httpie

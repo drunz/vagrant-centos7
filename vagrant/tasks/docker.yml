@@ -1,0 +1,21 @@
+---
+
+- name: Add Docker Repository
+  yum_repository:
+    name=docker
+    description="Docker Repo"
+    baseurl=https://yum.dockerproject.org/repo/main/centos/7/
+    gpgcheck=yes
+    gpgkey=https://yum.dockerproject.org/gpg
+
+- name: Install Docker
+  yum: name=docker-engine state=latest
+
+- group: name=docker state=present
+- user: name=vagrant groups=docker append=yes state=present
+
+- name: Ensure Docker is running
+  service: name=docker state=restarted enabled=yes
+
+- name: Install Docker compose
+  pip: name=docker-compose state=latest

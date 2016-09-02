@@ -1,0 +1,45 @@
+---
+
+- name: Install PostgreSQL repo
+  yum: name=http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-2.noarch.rpm state=present
+
+- name: Install PostgreSQL 9.4
+  yum: name={{ item }} state=latest
+  with_items:
+    - postgresql94-server
+    - postgresql94-contrib
+    - postgresql94-devel
+
+- name: Initialize PostgreSQL cluster
+  command: /usr/pgsql-9.4/bin/postgresql94-setup initdb
+  args:
+    creates: /var/lib/pgsql/9.4/data/postgresql.conf
+
+- name: Disable ident connections to PostgreSQL
+  lineinfile:
+    dest=/var/lib/pgsql/9.4/data/pg_hba.conf
+    regexp="^host.*ident$"
+    state=absent
+
+- name: Enable trusted connections to PostgreSQL
+  lineinfile:
+    dest=/var/lib/pgsql/9.4/data/pg_hba.conf
+    line="host    all    all    {{ item }}    trust"
+    state=present
+  with_items:
+      - 127.0.0.1/32
+      - ::1/128
+      - 0.0.0.0/0
+      - ::0/0
+
+- name: Change PostgreSQL listen addresses
+  lineinfile:
+    dest=/var/lib/pgsql/9.4/data/postgresql.conf
+    line="listen_addresses = '*'"
+    state=present
+
+- name: Reload PostgreSQL config
+  service: name=postgresql-9.4 state=reloaded
+
+- name: Ensure PostgreSQL is running
+  service: name=postgresql-9.4 state=started enabled=yes
