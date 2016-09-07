@@ -21,10 +21,10 @@ CentOS 7 Vagrant environment for development.
     vagrant ssh
     ```
 
-## Mount Points
+## Synchronized Folders
 
-- `/projects` Parent folder from the host relative from this repository.
-- `/vagrant` Local folder from the host.
+- `.` → `/vagrant` Local repository folder.
+- `..` → `/projects` Parent of the repository folder.
 
 ## Installed Dependencies
 
