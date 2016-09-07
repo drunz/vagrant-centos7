@@ -20,8 +20,14 @@ CentOS 7 Vagrant environment for development.
     ```
     vagrant ssh
     ```
-    
+
 ## Mount Points
 
 - `/projects` Parent folder from the host relative from this repository.
 - `/vagrant` Local folder from the host.
+
+## Installed Dependencies
+
+- Docker 1.12
+- PostgreSQL 9.4
+- Python 3.4
