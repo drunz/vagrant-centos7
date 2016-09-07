@@ -29,5 +29,5 @@ CentOS 7 Vagrant environment for development.
 ## Installed Dependencies
 
 - Docker 1.12
-- PostgreSQL 9.4
+- PostgreSQL 9.5
 - Python 3.4
