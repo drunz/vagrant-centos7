@@ -1,7 +1,5 @@
 ---
 
-# Python 3
-
 - name: Install Python3
   yum: name={{ item }} state=latest
   with_items:
