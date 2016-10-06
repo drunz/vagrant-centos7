@@ -17,6 +17,7 @@
       yum: name={{ item }} state=latest
       with_items:
         - epel-release
+        - yum-cron
         - vim
         - htop
         - ntp
@@ -26,6 +27,12 @@
         - python-pip
         - wget
         - siege
+
+    - name: Enable yum-cron auto updates
+      lineinfile:
+        dest: /etc/yum/yum-cron.conf
+        regexp: ^apply_updates
+        line: apply_updates = yes
 
     - name: Acquire permissions to /var/log
       file:
