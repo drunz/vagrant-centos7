@@ -34,6 +34,9 @@
         regexp: ^apply_updates
         line: apply_updates = yes
 
+    - name: Enable yum-cron service
+      service: name=yum-cron state=started enabled=yes
+
     - name: Acquire permissions to /var/log
       file:
         path: /var/log
