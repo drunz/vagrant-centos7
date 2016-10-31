@@ -21,6 +21,12 @@ CentOS 7 Vagrant environment for development.
     vagrant ssh
     ```
 
+3. Synchronize the folders on the host:
+    
+    ```
+    vagrant rsync-auto
+    ```
+
 ## Synchronized Folders
 
 - `.` → `/vagrant` Local repository folder.
