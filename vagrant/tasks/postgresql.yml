@@ -45,3 +45,11 @@
 
 - name: Ensure PostgreSQL is running
   service: name=postgresql-9.5 state=started enabled=yes
+
+- name: Add PostgreSQL binaries to path
+  lineinfile:
+    dest=~/.bash_profile
+    line="PATH=$PATH:/usr/pgsql-9.5/bin"
+    insertbefore="export PATH"
+  become: yes
+  become_user: vagrant
