@@ -6,6 +6,7 @@ CentOS 7 Vagrant environment for development.
 
 - [Vagrant](https://www.vagrantup.com)
 - [VirtualBox](https://www.virtualbox.org)
+- [Babun](http://babun.github.io) (optional, for rsync)
 
 ## Getting Started
 
